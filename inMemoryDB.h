@@ -1,12 +1,16 @@
 #pragma once
-#include <string.h>
+#include <string>
+#include <map>
+
+#ifndef INMEMORYDB_H
+#define INMEMORYDB_H
+
 
 struct inMemoryDB {
-    private:
-    std::string key;
-    int val;
 
-    public:
+    std::map<std::string, int> m;
+    bool transactionBegun;
+
     inMemoryDB();
     int get(std::string key);
     void put(std::string key, int val);
@@ -14,3 +18,5 @@ struct inMemoryDB {
     void commit();
     void rollback();
 };
+
+#endif
