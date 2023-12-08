@@ -1,3 +1,5 @@
+Ensure C++ extensions are installed before beginning.
+
 To get started, compile the .cpp file by using the following command:
 **g++ -o program inMemoryDB.cpp**
 
