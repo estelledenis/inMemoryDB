@@ -10,10 +10,11 @@ inMemoryDB::inMemoryDB() {
 }
 
 int inMemoryDB::get(string key) {
-    if (this->m[key] == 0) {
+    if (this->m.find(key) == this->m.end()) {
         return INT_MIN;
     }
     else {
+        cout << "Value: " << this->m[key] << endl;
         return this->m[key];
     }
 }
@@ -49,19 +50,53 @@ void inMemoryDB::rollback() {
 int main() {
 
     inMemoryDB d;
- //   d.get("A");
- //   d.put("A", 5);
-    d.begin_transaction();
-    d.put("A", 5);
-    cout << d.get("A");
-    d.put("A", 6);
-    d.commit();
- //   d.rollback();
-    cout << d.get("B");
-    d.begin_transaction();
-    d.put("B", 10);
-    d.commit();
-    cout << d.get("B");
+    int val;
+    string key;
+    bool on = true;
+
+    while(on) {
+
+    cout << "Welcome to the in memory database" << endl;
+    cout << "1. Begin transaction" << endl;
+    cout << "2. Put a value" << endl;
+    cout << "3. Get a value" << endl;
+    cout << "4. Commit" << endl;
+    cout << "5. Rollback" << endl;
+    cout << "6. Exit database" << endl;
+
+    int option;
+    cin >> option;
+
+    switch(option) {
+        case 1:
+        d.begin_transaction();
+        break;
+
+        case 2:
+        cout << "Please enter a key followed by a value" << endl;
+        cin >> key >> val;
+        d.put(key, val);
+        break;
+
+        case 3:
+        cout << "Please enter a key" << endl;
+        cin >> key;
+        d.get(key);
+        break;
+
+        case 4:
+        d.commit();
+        break;
+
+        case 5:
+        d.rollback();
+        break;
+
+        case 6:
+        on = false;
+        break;
+        }
+    }
 
     return 0;
 }
