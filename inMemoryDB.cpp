@@ -11,10 +11,13 @@ inMemoryDB::inMemoryDB() {
 
 int inMemoryDB::get(string key) {
     if (this->m.find(key) == this->m.end()) {
+        cout << "No value found." << endl;
+        cout << endl;
         return INT_MIN;
     }
     else {
         cout << "Value: " << this->m[key] << endl;
+        cout << endl;
         return this->m[key];
     }
 }
@@ -26,16 +29,24 @@ void inMemoryDB::put(string key, int val) {
     
     temp = this->m;
     temp[key] = val;
+    cout << endl;
 }
 
 void inMemoryDB::begin_transaction() {
     this->transactionBegun = true;
     temp = this->m;
+    cout << "Transaction begun." << endl;
+    cout << endl;
 }
 
 void inMemoryDB::commit() {
+    if (this->transactionBegun == false) {
+        throw runtime_error("No open transaction.");
+    }
     this->m = temp;
     this->transactionBegun = false;
+    cout << "Commit successful." << endl;
+    cout << endl;
 }
 
 void inMemoryDB::rollback() {
@@ -44,6 +55,8 @@ void inMemoryDB::rollback() {
     }
     temp.clear();
     this->transactionBegun = false;
+    cout << "Rollback successful." << endl;
+    cout << endl;
 }
 
 
